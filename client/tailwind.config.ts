@@ -15,7 +15,7 @@ const config: Config = {
       },
       colors: {
         background: "#F5F5F5",
-        header: "#333333"
+        text: "#333333"
       }
     },
   },
