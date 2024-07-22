@@ -7,7 +7,9 @@ interface Client {
     name: string,
     email: string,
     phone: string,
+    location: string,
     notes: string,
+    status: "active" | "prospect" | "completed" | "not completed",
     createdAt: string
 }
 
