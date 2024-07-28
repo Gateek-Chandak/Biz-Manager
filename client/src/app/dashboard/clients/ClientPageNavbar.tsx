@@ -1,69 +1,98 @@
 "use client"
 
-import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button, Input} from "@nextui-org/react";
+import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button, Input, Divider} from "@nextui-org/react";
 import { useState } from "react";
+import {UserIcon} from "../components/userIcon"
 
-type Status = "Active" | "Prospects" | "Completed" | "Not Completed";
-type colourStatus = "success" | "warning" | "danger" | "primary" 
+type Status = "Active" | "Prospects" | "Completed" | "All";
+type colourStatus = "bg-success" | "bg-warning" | "bg-danger" | "bg-primary"  | "bg-purple-400"
+type FilterStatus = "Active" | "Prospects" | "Completed" | "All"
 
-const ClientPageNavbar = () => {
+const ClientPageNavbar = ( { status, setStatus }: {status: FilterStatus, setStatus: React.Dispatch<React.SetStateAction<FilterStatus>> } ) => {
 
-    const [colour, setColour]= useState<colourStatus>("warning")
-    const [status, setStatus] = useState<Status>("Active")
+    const [colour, setColour]= useState<colourStatus>("bg-purple-400")
 
     const handleClickAction = (key: React.Key) => {
         // Type assertion to ensure key is of type Status
         const selectedStatus = key as Status;
 
         switch(selectedStatus) {
+            case 'All':
+                setColour("bg-purple-400")
+                break
             case 'Active':
-                setColour("warning")
+                setColour("bg-warning")
                 break
             case 'Completed':
-                setColour("success")
-                break
-            case "Not Completed":
-                setColour("danger")
+                setColour("bg-success")
                 break
             case "Prospects":
-                setColour("primary")
+                setColour("bg-primary")
                 break
             default:
-                setColour("warning")
+                setColour("bg-purple-400")
                 break
         }
 
-        setStatus(selectedStatus);
+        setStatus(selectedStatus)
       };
 
     return ( 
-        <div className="border-b border-b-gray-300 h-16 p-2 my-2 mx-4 flex flex-start gap-7"> 
-                <Dropdown className="bg-text rounded-lg">
+        <div className="border-b border-b-gray-400 h-16 px-1 pb-4 mt-3 mx-4 flex flex-start gap-6"> 
+                <Dropdown className="bg-text rounded-lg border border-background" aria-label="Client Status Filter">
                     <DropdownTrigger className="">
-                        <Button variant="solid" className={`min-w-32 bg-${colour} text-background`}>{status} </Button>
+                        <Button variant="solid" className={`min-w-32 gap ${colour} text-background`}>{status}</Button>
                     </DropdownTrigger>
                     <DropdownMenu aria-label="Static Actions" variant="light" 
-                                  className="bg-text text-white px-5" 
+                                  className="bg-text text-white px-4 border rounded-lg" 
                                   onAction={handleClickAction} 
                                   classNames={{
-                                        list: "gap-0",
+                                        list: "gap-0 bg-text",
                                   }}>
-                        <DropdownItem key="Active" className="bg-text rounded-none text-warning">
-                            <h6 className="bg-text hover:text-white" >Active</h6>
+                        <DropdownItem key="All" className="bg-text rounded-none text-background">
+                            <h6 className="bg-text px-1 pt-5" >All</h6>
+                            <p className="text-gray-500 px-1 text-xs">view all clients</p>
                         </DropdownItem>
-                        <DropdownItem key="Prospects" className="bg-text rounded-none text-primary " showDivider={false}>
-                            <h6 className="bg-text hover:text-white">Prospects</h6>
+                        <DropdownItem key="Active" className="rounded-none text-warning">
+                            <Divider className="bg-gray-600" />
+                            <h6 className="bg-text px-1 pt-5 hover:text-warning-700" >Active</h6>
+                            <p className="text-gray-500 px-1 text-xs">view all active clients</p>
                         </DropdownItem>
-                        <DropdownItem key="Completed" color="success" className="bg-text rounded-none text-success" showDivider={false}>
-                            <h6 className="bg-text hover:text-white">Completed</h6>
+                        <DropdownItem key="Prospects" className="bg-text rounded-none text-primary ">
+                            <Divider className="bg-gray-600" />
+                            <h6 className="bg-text px-1 pt-5 hover:text-primary-700">Prospects</h6>
+                            <p className="text-gray-500 px-1 text-xs">view all prospective clients</p>
                         </DropdownItem>
-                        <DropdownItem key="Not Completed" className="bg-text rounded-none text-danger" showDivider={false}>
-                            <h6 className="bg-text hover:text-white">Not Completed</h6>
+                        <DropdownItem key="Completed" color="success" className="bg-text rounded-none text-success pb-6">
+                            <Divider className="bg-gray-600" />
+                            <h6 className="bg-text hover:text-success-700 px-1 pt-5">Completed</h6>
+                            <p className="text-gray-500 px-1 text-xs">view all completed clients</p>
                         </DropdownItem>
                     </DropdownMenu>
                 </Dropdown>
-                <Input type="search" placeholder="Search For A Client" variant="bordered" className="w-72 h-5 hover:border-red-50"/>
-                <Button variant="solid" className={`min-w-20 text-text bg-gray-400`}>+ Add Client</Button>
+                <Input  placeholder="Search for a client"
+                        isClearable
+                        radius="lg"
+                        className="h-5 w-5/12"
+                        classNames={{
+                        label: "text-black",
+                        input: [
+                            "bg-transparent",
+                        ],
+                        innerWrapper: "bg-transparent",
+                        inputWrapper: [
+                            "shadow-sm",
+                            "backdrop-blur-xl",
+                            "backdrop-saturate-200",
+                            "hover:bg-default-200/70",
+                            "dark:group-data-[focus=true]:bg-default-100/70",
+                            "!cursor-text",
+                        ],
+                        }}/>
+                <Button variant="ghost" className={`min-w-10 text-sm text-text hover:text-background bg-transparent`}>Filter</Button>
+                <Button variant="shadow" 
+                        className={`min-w-10 text-sm text-background bg-white ml-auto rounded-full shadow-md`}
+                        startContent={<UserIcon/>}>Add New +</Button>
             </div>
      );
 }

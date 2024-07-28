@@ -9,7 +9,7 @@ interface Client {
     phone: string,
     location: string,
     notes: string,
-    status: "active" | "prospect" | "completed" | "not completed",
+    status: "Active" | "Prospect" | "Completed" | "None",
     createdAt: string
 }
 
@@ -24,7 +24,7 @@ const ClientContext = createContext<ClientContextType | undefined>(undefined)
 
 const ClientContextProvider = ({children}: {children: ReactNode}) => {
 
-    const [clients, setClients] = useState<Client[]>([])
+    const [clients, setClients] = useState<Client[]>([{id: "1", name: "Gateek Chandak", email: "gateek09@gmail.com", phone: "647-642-0609", location: "Mississauga, ON", notes: "", status: "Completed", createdAt: "5"}, {id: "2", name: "Gateek Chandak", email: "gateek09@gmail.com", phone: "647-642-0609", location: "Mississauga, ON", notes: "", status: "None", createdAt: "5"}, {id: "3", name: "Gateek Chandak", email: "gateek09@gmail.com", phone: "647-642-0609", location: "Mississauga, ON", notes: "", status: "Prospect", createdAt: "5"}, {id: "4", name: "Gateek Chandak", email: "gateek09@gmail.com", phone: "647-642-0609", location: "Mississauga, ON", notes: "", status: "Active", createdAt: "5"}])
 
     const addClient = (newClient: Client) => {
         setClients([...clients, newClient])

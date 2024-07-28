@@ -1,12 +1,31 @@
 import type { Metadata } from "next"
 import "./globals.css";
+import { Montserrat } from "next/font/google";
+import { Playfair_Display } from "next/font/google";
 import { Roboto } from 'next/font/google'
+import { Quicksand } from "next/font/google";
+
 import {NextUIProvider} from "@nextui-org/react";
+
+const qs = Quicksand({
+  subsets: ['latin'],
+  weight: '500'
+})
 
 const roboto = Roboto({
   weight: '400',
   subsets: ['latin'],
   display: 'swap',
+})
+
+const montserrat = Montserrat({
+  subsets: ['latin'],
+  weight: '200'
+})
+
+const pf = Playfair_Display({
+  subsets: ['latin'],
+  weight: '400'
 })
 
 export const metadata: Metadata = {
@@ -20,7 +39,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={roboto.className}>
+    <html lang="en" className={qs.className}>
       <body>
         <NextUIProvider>
         {children}
