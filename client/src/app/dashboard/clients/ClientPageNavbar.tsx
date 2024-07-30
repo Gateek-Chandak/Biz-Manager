@@ -1,9 +1,11 @@
 "use client"
 
+import FilterIcon from "../images/filterIcon.png"
 import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button, Input, Divider} from "@nextui-org/react";
 import { useState } from "react";
 import {UserIcon} from "../components/userIcon"
 import Link from "next/link";
+import Image from "next/image";
 
 type Status = "Active" | "Prospects" | "Completed" | "All";
 type colourStatus = "bg-success" | "bg-warning" | "bg-danger" | "bg-primary"  | "bg-purple-400"
@@ -41,9 +43,10 @@ const ClientPageNavbar = ( { status, setStatus}: {status: FilterStatus,
 
     return ( 
         <div className="border-b border-b-gray-400 h-16 px-1 pb-4 mt-3 mx-4 flex flex-start gap-6"> 
+            <div className="grid grid-cols-4 gap-5">
                 <Dropdown className="bg-text rounded-lg border border-background" aria-label="Client Status Filter">
                     <DropdownTrigger className="">
-                        <Button variant="solid" className={`min-w-32 gap ${colour} text-background`}>{status}</Button>
+                        <Button variant="solid" className={`w-16 md:w-32 gap ${colour} text-background`}>{status}</Button>
                     </DropdownTrigger>
                     <DropdownMenu aria-label="Static Actions" variant="light" 
                                   className="bg-text text-white px-4 border rounded-lg" 
@@ -75,7 +78,7 @@ const ClientPageNavbar = ( { status, setStatus}: {status: FilterStatus,
                 <Input  placeholder="Search for a client"
                         isClearable
                         radius="lg"
-                        className="h-5 w-5/12"
+                        className="h-5 w-full col-span-2"
                         classNames={{
                         label: "text-black",
                         input: [
@@ -91,13 +94,15 @@ const ClientPageNavbar = ( { status, setStatus}: {status: FilterStatus,
                             "!cursor-text",
                         ],
                         }}/>
-                <Button variant="ghost" className={`min-w-10 text-sm text-text hover:text-background bg-transparent`}>Filter</Button>
+                <Button variant="ghost" className="text-sm text-text hover:text-background bg-transparent md:w-12 w-6">Filter</Button>
+            </div>
+                
                 <Button variant="shadow" 
-                        className={`min-w-10 text-sm text-background bg-white ml-auto rounded-full shadow-md`}
-                        startContent={<UserIcon/>}
+                        className={`min-w-10 text-lg text-background bg-white ml-auto rounded-full shadow-md`}
+                        endContent={<UserIcon/>}
                         as={Link}
                         href="/dashboard/clients/addclient">
-                            Add Client +
+                            +
                 </Button>
             </div>
      );
