@@ -3,12 +3,14 @@
 import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button, Input, Divider} from "@nextui-org/react";
 import { useState } from "react";
 import {UserIcon} from "../components/userIcon"
+import Link from "next/link";
 
 type Status = "Active" | "Prospects" | "Completed" | "All";
 type colourStatus = "bg-success" | "bg-warning" | "bg-danger" | "bg-primary"  | "bg-purple-400"
 type FilterStatus = "Active" | "Prospects" | "Completed" | "All"
 
-const ClientPageNavbar = ( { status, setStatus }: {status: FilterStatus, setStatus: React.Dispatch<React.SetStateAction<FilterStatus>> } ) => {
+const ClientPageNavbar = ( { status, setStatus}: {status: FilterStatus, 
+                                                                       setStatus: React.Dispatch<React.SetStateAction<FilterStatus>>} ) => {
 
     const [colour, setColour]= useState<colourStatus>("bg-purple-400")
 
@@ -77,7 +79,7 @@ const ClientPageNavbar = ( { status, setStatus }: {status: FilterStatus, setStat
                         classNames={{
                         label: "text-black",
                         input: [
-                            "bg-transparent",
+                            "bg-transparent"
                         ],
                         innerWrapper: "bg-transparent",
                         inputWrapper: [
@@ -92,7 +94,11 @@ const ClientPageNavbar = ( { status, setStatus }: {status: FilterStatus, setStat
                 <Button variant="ghost" className={`min-w-10 text-sm text-text hover:text-background bg-transparent`}>Filter</Button>
                 <Button variant="shadow" 
                         className={`min-w-10 text-sm text-background bg-white ml-auto rounded-full shadow-md`}
-                        startContent={<UserIcon/>}>Add New +</Button>
+                        startContent={<UserIcon/>}
+                        as={Link}
+                        href="/dashboard/clients/addclient">
+                            Add Client +
+                </Button>
             </div>
      );
 }

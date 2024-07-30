@@ -7,10 +7,10 @@ interface Client {
     name: string,
     email: string,
     phone: string,
-    location: string,
-    notes: string,
+    location: string | null,
+    notes: string | null,
     status: "Active" | "Prospect" | "Completed" | "None",
-    createdAt: string
+    createdAt: number
 }
 
 interface ClientContextType{
@@ -24,19 +24,19 @@ const ClientContext = createContext<ClientContextType | undefined>(undefined)
 
 const ClientContextProvider = ({children}: {children: ReactNode}) => {
 
-    const [clients, setClients] = useState<Client[]>([{id: "1", name: "Gateek Chandak", email: "gateek09@gmail.com", phone: "647-642-0609", location: "Mississauga, ON", notes: "", status: "Completed", createdAt: "5"}, {id: "2", name: "Gateek Chandak", email: "gateek09@gmail.com", phone: "647-642-0609", location: "Mississauga, ON", notes: "", status: "None", createdAt: "5"}, {id: "3", name: "Gateek Chandak", email: "gateek09@gmail.com", phone: "647-642-0609", location: "Mississauga, ON", notes: "", status: "Prospect", createdAt: "5"}, {id: "4", name: "Gateek Chandak", email: "gateek09@gmail.com", phone: "647-642-0609", location: "Mississauga, ON", notes: "", status: "Active", createdAt: "5"}])
+    const [clients, setClients] = useState<Client[]>([])
 
     const addClient = (newClient: Client) => {
         setClients([...clients, newClient])
     }
 
     const removeClient = (id: string) => {
-        setClients(clients.filter((client) => client.id !== id))
+        setClients((prevClients) => prevClients.filter((client) => client.id !== id));
     }
 
     const updateClient = (id: string, updatedClient: Partial<Client>) => {
-        setClients(clients.map(client => (client.id === id ? { ...client, ...updatedClient } : client)))
-    }   
+        setClients((prevClients) => prevClients.map(client => (client.id === id ? { ...client, ...updatedClient } : client)))
+    }  
 
     return ( 
         <ClientContext.Provider value={{clients, addClient, removeClient, updateClient}}>

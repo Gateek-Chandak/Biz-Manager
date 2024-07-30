@@ -15,7 +15,7 @@ const CurrentCustomersPage = () => {
     return ( 
         <div className="w-full h-screen flex flex-col gap-2 bg-background">
             <Header title="Clients"/>
-            <ClientPageNavbar status={status} setStatus={setStatus}/> 
+            <ClientPageNavbar status={status} setStatus={setStatus}/>
             <div className="w-full h-full px-6 pt-2 pb-4">
                 <ClientTable status={status}/>
             </div>

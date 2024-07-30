@@ -22,16 +22,17 @@ import DotsIcon from '../images/dots.png'
 
 type Status = "Active" | "Prospect" | "Completed" | "None"
 type FilterStatus = "Active" | "Prospects" | "Completed" | "All"
+type ClientStatus = "view" | "edit" | "delete"
 
 interface Client {
-    id: string,
-    name: string,
-    email: string,
-    phone: string,
-    location: string,
-    notes: string,
-    status: "Active" | "Prospect" | "Completed" | "None",
-    createdAt: string
+  id: string,
+  name: string,
+  email: string,
+  phone: string,
+  location: string | null,
+  notes: string | null,
+  status: "Active" | "Prospect" | "Completed" | "None",
+  createdAt: number
 }
 
 const ClientTable = ( { status }: {status: FilterStatus} ) => {
@@ -46,7 +47,7 @@ const ClientTable = ( { status }: {status: FilterStatus} ) => {
             setFilteredClients(clients)
         }
         console.log(filteredClients)
-    }, [status])
+    }, [status, clients])
 
     const getStatusClass = (status: Status) => {
         switch (status) {
@@ -62,7 +63,14 @@ const ClientTable = ( { status }: {status: FilterStatus} ) => {
             return '';
         }
       };
-    
+
+    const handleAction = (key: React.Key, id: string) => {
+      const action = key as ClientStatus
+
+      if(action == 'delete') {
+        removeClient(id)
+      }
+    }
 
     return ( 
         <Table className="w-full h-full" 
@@ -104,8 +112,9 @@ const ClientTable = ( { status }: {status: FilterStatus} ) => {
                                  className="h-5 w-auto rounded-full hover:bg-gray-200"/>
                               </Button>
                             </DropdownTrigger>
-                            <DropdownMenu aria-label="Static Actions">
-                              <DropdownItem key="new">Edit Client</DropdownItem>
+                            <DropdownMenu aria-label="Static Actions" onAction={(key) => handleAction(key, item.id)}>
+                              <DropdownItem key="view">View Client</DropdownItem>
+                              <DropdownItem key="edit">Edit Client</DropdownItem>
                               <DropdownItem key="delete" className="text-danger" color="danger">
                                 Delete Client
                               </DropdownItem>
